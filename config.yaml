@@ -1,0 +1,4 @@
+name: Libi
+count: 20
+operations: ['mul', 'mul', 'mul', 'mul', 'mul', 'div', 'div','div','div','div', 'bigmul', 'zeroesmul', 'devrem']
+mul_operand_max: 90
