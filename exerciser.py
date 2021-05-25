@@ -32,7 +32,6 @@ def get_options():
         with open(args.config, 'r') as ymlfile:
             cfg = yaml.safe_load(ymlfile)
 
-        print(cfg)
         if 'name' in cfg:
             options['name'] = cfg['name']
         if 'count' in cfg:
@@ -124,7 +123,6 @@ def main():
     i = 0
     while i < int(options['count']):
         op = random.choice(options['operations'])
-        print(op)
 
         if op == 'add':
             addition(options['addition_range'])
