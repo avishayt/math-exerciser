@@ -56,8 +56,8 @@ def subtraction(addition_range):
     problem = '%s\n- %s\n  ___\n' % (str(bigger).rjust(5), str(smaller).rjust(3))
     get_and_check_solution(problem, answer)
 
-def multiplication(operands):
-    operands = [random.choice(operands), random.choice(range(1, 11))]
+def multiplication(operands1, operands2):
+    operands = [random.choice(operands1), random.choice(operands1)]
     product = operands[0] * operands[1]
     first = random.choice([0,1])
     second = 0 if first == 1 else 1
@@ -74,9 +74,6 @@ def multiplication(operands):
         problem = '%d X %d = ?\t____' % (operands[first], operands[second])
 
     get_and_check_solution(problem, answer)
-
-def big_multiplication():
-    multiplication(range(2,100), range(2,100))
 
 def zeroes_multiplication(operands):
     operands = [random.choice(operands), random.choice(range(1, 11))]
@@ -129,9 +126,9 @@ def main():
         elif op == 'sub':
             subtraction(options['addition_range'])
         elif op == 'mul':
-            multiplication(options['operands'])
+            multiplication(options['operands'], range(1, 11))
         elif op == 'bigmul':
-            big_multiplication()
+            multiplication(range(2,100), range(2,100))
         elif op == 'zeroesmul':
             zeroes_multiplication(options['operands'])
         elif op == 'div':
