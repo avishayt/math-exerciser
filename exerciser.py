@@ -75,10 +75,16 @@ def multiplication(operands1, operands2):
 
     get_and_check_solution(problem, answer)
 
+def big_multiplication(operands1, operands2):
+    operands = [random.choice(operands1), random.choice(operands2)]
+    answer = operands[0] * operands[1]
+    problem = '%d X %d = ?\t____' % (operands[0], operands[1])
+    get_and_check_solution(problem, answer)
+
 def zeroes_multiplication(operands):
     operands = [random.choice(operands), random.choice(range(1, 11))]
     operands[0] = operands[0] * (10 ** random.choice(range(0, 3)))
-    operands[1] = operands[0] * (10 ** random.choice(range(0, 3)))
+    operands[1] = operands[1] * (10 ** random.choice(range(0, 3)))
     answer = operands[0] * operands[1]
     problem = '%d X %d = ?\t____' % (operands[0], operands[1])
     get_and_check_solution(problem, answer)
@@ -128,7 +134,7 @@ def main():
         elif op == 'mul':
             multiplication(options['operands'], range(1, 11))
         elif op == 'bigmul':
-            multiplication(range(2,100), range(2,100))
+            big_multiplication(range(2,100), range(2,100))
         elif op == 'zeroesmul':
             zeroes_multiplication(options['operands'])
         elif op == 'div':
