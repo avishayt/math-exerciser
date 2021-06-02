@@ -26,7 +26,9 @@ def get_options():
                'count': 20,
                'operands': range(2, 10),
                'addition_range': range(101,1000),
-               'operations': ['mul', 'div']}
+               'operations': ['mul', 'div'],
+               'bigmulmaxop1': 999,
+               'bigmulmaxop2': 9}
 
     if args.config:
         with open(args.config, 'r') as ymlfile:
@@ -38,6 +40,10 @@ def get_options():
             options['count'] = int(cfg['count'])
         if 'operands' in cfg:
             options['operands'] = cfg['operands']
+        if 'bigmulmaxop1' in cfg:
+            options['bigmulmaxop1'] = int(cfg['bigmulmaxop1'])
+        if 'bigmulmaxop2' in cfg:
+            options['bigmulmaxop2'] = int(cfg['bigmulmaxop2'])
         if 'operations' in cfg:
             options['operations'] = cfg['operations']
 
@@ -78,7 +84,7 @@ def multiplication(operands1, operands2):
 def big_multiplication(operands1, operands2):
     operands = [random.choice(operands1), random.choice(operands2)]
     answer = operands[0] * operands[1]
-    problem = '%d X %d = ?\t____' % (operands[0], operands[1])
+    problem = '%s\nX %s\n  ___\n' % (str(operands[0]).rjust(5), str(operands[1]).rjust(3))
     get_and_check_solution(problem, answer)
 
 def zeroes_multiplication(operands):
@@ -134,7 +140,7 @@ def main():
         elif op == 'mul':
             multiplication(options['operands'], range(1, 11))
         elif op == 'bigmul':
-            big_multiplication(range(2,100), range(2,100))
+            big_multiplication(range(2,options['bigmulmaxop1']), range(2,options['bigmulmaxop2']))
         elif op == 'zeroesmul':
             zeroes_multiplication(options['operands'])
         elif op == 'div':
