@@ -59,7 +59,7 @@ def subtraction(addition_range):
     bigger = random.choice(addition_range)
     smaller = random.choice(range(1, bigger))
     answer = bigger - smaller
-    problem = '%s\n- %s\n  ___\n' % (str(bigger).rjust(5), str(smaller).rjust(3))
+    problem = '%s\n- %s\n  ___' % (str(bigger).rjust(5), str(smaller).rjust(3))
     get_and_check_solution(problem, answer)
 
 def multiplication(operands1, operands2):
@@ -71,20 +71,20 @@ def multiplication(operands1, operands2):
     variable = random.choice([0,4])
     if variable == 0:
         answer = operands[first]
-        problem = '? X %d = %d\t____' % (operands[second], product)
+        problem = '? X %d = %d' % (operands[second], product)
     elif variable == 1:
         answer = operands[second]
-        problem = '%d X ? = %d\t____' % (operands[first], product)
+        problem = '%d X ? = %d' % (operands[first], product)
     else:
         answer = product
-        problem = '%d X %d = ?\t____' % (operands[first], operands[second])
+        problem = '%d X %d = ?' % (operands[first], operands[second])
 
     get_and_check_solution(problem, answer)
 
 def big_multiplication(operands1, operands2):
     operands = [random.choice(operands1), random.choice(operands2)]
     answer = operands[0] * operands[1]
-    problem = '%s\nX %s\n  ___\n' % (str(operands[0]).rjust(5), str(operands[1]).rjust(3))
+    problem = '%s\nX %s\n  ___' % (str(operands[0]).rjust(5), str(operands[1]).rjust(3))
     get_and_check_solution(problem, answer)
 
 def zeroes_multiplication(operands):
@@ -92,7 +92,7 @@ def zeroes_multiplication(operands):
     operands[0] = operands[0] * (10 ** random.choice(range(0, 3)))
     operands[1] = operands[1] * (10 ** random.choice(range(0, 3)))
     answer = operands[0] * operands[1]
-    problem = '%d X %d = ?\t____' % (operands[0], operands[1])
+    problem = '%d X %d = ?' % (operands[0], operands[1])
     get_and_check_solution(problem, answer)
 
 def division(operands):
@@ -102,7 +102,7 @@ def division(operands):
     second = 0 if first == 1 else 1
 
     answer = operands[second]
-    problem = '%d : %d = ?\t____' % (product, operands[first])
+    problem = '%d : %d = ?\t' % (product, operands[first])
     get_and_check_solution(problem, answer)
 
 def division_remainder(operands):
@@ -112,15 +112,27 @@ def division_remainder(operands):
     second = 0 if first == 1 else 1
     remainder = random.choice(range(0, operands[first]))
     product += remainder
-    problem = '%d : %d = %d\tRemainder: ___' % (product, operands[first], operands[second])
+    problem = '%d : %d = %d\tRemainder: ?' % (product, operands[first], operands[second])
     get_and_check_solution(problem, remainder)
 
-def get_and_check_solution(problem, answer):
+def fraction_conversion():
+    whole_number = random.choice(range(1, 5))
+    denominator = random.choice(range(2, 10))
+    numerator = random.choice(range(1, denominator))
+    improper_numerator = (whole_number * denominator) + numerator
+    to_improper = random.choice([0, 1])
+
+    if to_improper == 1:
+        get_and_check_solution('%d %d/%d = ?' % (whole_number, numerator, denominator), '%s/%s' % (improper_numerator, denominator), answer_type=str)
+    else:
+        get_and_check_solution('%d/%d = ?' % (improper_numerator, denominator), '%s %s/%s' % (whole_number, numerator, denominator), answer_type=str)
+
+def get_and_check_solution(problem, answer, answer_type=int):
     attempt = -1
     while attempt != answer:
-        attempt = input(random.choice(bgcolors) + problem + Style.RESET_ALL + '  ')
+        attempt = input(random.choice(bgcolors) + problem + Style.RESET_ALL + '\n')
         try:
-            attempt = int(attempt)
+            attempt = answer_type(attempt)
         except:
             attempt = -1
 
@@ -147,11 +159,13 @@ def main():
             division(options['operands'])
         elif op == 'devrem':
             division_remainder(options['operands'])
+        elif op == 'fracconv':
+            fraction_conversion()
         else:
             continue
 
         print(emoji.emojize(random.choice(emojis), use_aliases=True) +
-            ' ' + str(int(options['count']) - i - 1) + ' left')
+            ' ' + str(int(options['count']) - i - 1) + ' left\n')
         i = i + 1
 
     print('Great job ' + options['name'] + '!!!')
