@@ -115,12 +115,42 @@ def division_remainder(operands):
     problem = '%d : %d = %d\tRemainder: ?' % (product, operands[first], operands[second])
     get_and_check_solution(problem, remainder)
 
+def fraction_string(whole_number, numerator, denominator):
+    filled = u'\u25AE'
+    unfilled = u'\u25AF'
+
+    s = ""
+    for i in range(0, whole_number):
+        for j in range(0, denominator):
+            s = s + filled
+        s = s + '  '
+
+    for i in range(0, numerator):
+        s = s + filled
+    for i in range(0, denominator - numerator):
+        s = s + unfilled
+
+    return s
+
+def fraction_identify():
+    whole_number = random.choice(range(1, 5))
+    denominator = random.choice(range(2, 10))
+    numerator = random.choice(range(1, denominator))
+    filled = u'\u25AE'
+    unfilled = u'\u25AF'
+
+    problem = fraction_string(whole_number, numerator, denominator)
+
+    get_and_check_solution(problem, '%s %s/%s' % (whole_number, numerator, denominator), answer_type=str)
+
 def fraction_conversion():
     whole_number = random.choice(range(1, 5))
     denominator = random.choice(range(2, 10))
     numerator = random.choice(range(1, denominator))
     improper_numerator = (whole_number * denominator) + numerator
     to_improper = random.choice([0, 1])
+
+    print(fraction_string(whole_number, numerator, denominator))
 
     if to_improper == 1:
         get_and_check_solution('%d %d/%d = ?' % (whole_number, numerator, denominator), '%s/%s' % (improper_numerator, denominator), answer_type=str)
@@ -159,6 +189,8 @@ def main():
             division(options['operands'])
         elif op == 'devrem':
             division_remainder(options['operands'])
+        elif op == 'fracident':
+            fraction_identify()
         elif op == 'fracconv':
             fraction_conversion()
         else:
